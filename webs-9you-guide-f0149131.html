@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九游 · 数字生活新体验</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f6f1;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', sans-serif;
+            color: #2e2b27;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 800px;
+            width: 100%;
+            background: #fcfbf9;
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            padding: 2.5rem 2rem;
+            transition: box-shadow 0.2s;
+        }
+
+        @media (max-width: 560px) {
+            .page {
+                padding: 1.8rem 1.2rem;
+            }
+        }
+
+        /* 主视觉 — 温和的卡片框 */
+        .hero {
+            margin-bottom: 2.6rem;
+            padding: 2rem 1.8rem;
+            background: #ede8df;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #1d1b18;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            color: #4f4a44;
+            border-left: 3px solid #b5a99a;
+            padding-left: 1rem;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .hero .meta {
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #6f675e;
+            background: rgba(255, 255, 255, 0.4);
+            display: inline-block;
+            padding: 0.25rem 1rem 0.25rem 1.2rem;
+            border-radius: 30px;
+        }
+
+        /* 文章排版 */
+        .section-title {
+            font-weight: 450;
+            font-size: 1.35rem;
+            margin: 2.2rem 0 1rem 0;
+            letter-spacing: 0.02em;
+            color: #2c2824;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background: #c3b6a6;
+            border-radius: 4px;
+        }
+
+        p {
+            margin-bottom: 1.15rem;
+            font-size: 1rem;
+        }
+
+        a {
+            color: #7b6f60;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1px;
+            transition: color 0.15s;
+        }
+
+        a:hover {
+            color: #3d352d;
+        }
+
+        /* 用途卡片组 — 三列自适应 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .card-item {
+            background: #f6f2ec;
+            border-radius: 18px;
+            padding: 1.2rem 1rem 1rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .card-item:hover {
+            background: #efe9e1;
+        }
+
+        .card-item h3 {
+            font-weight: 500;
+            font-size: 1.05rem;
+            margin-bottom: 0.4rem;
+            color: #2e2822;
+        }
+
+        .card-item p {
+            font-size: 0.9rem;
+            color: #4d473f;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 640px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+        }
+
+        /* 适合人群 — 标签式 */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem 0.8rem;
+            margin: 1.2rem 0 1.8rem;
+        }
+
+        .tag {
+            background: #e5ddd3;
+            color: #3f3830;
+            padding: 0.3rem 1.1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+            border: 1px solid #d6cdc0;
+        }
+
+        /* 引用块 / 提示框 */
+        .quote-box {
+            background: #f3ede6;
+            padding: 1.2rem 1.6rem;
+            border-radius: 18px;
+            margin: 1.8rem 0 1.2rem;
+            border-left: 5px solid #b0a18f;
+        }
+
+        .quote-box p {
+            margin-bottom: 0.3rem;
+            font-style: normal;
+        }
+
+        .quote-box .attribution {
+            font-size: 0.85rem;
+            color: #6f655b;
+            margin-top: 0.4rem;
+        }
+
+        .tip-box {
+            background: #efe8de;
+            padding: 1rem 1.4rem;
+            border-radius: 16px;
+            margin: 1.4rem 0;
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+        }
+
+        .tip-box .symbol {
+            font-size: 1.3rem;
+            line-height: 1.2;
+            color: #7f7264;
+        }
+
+        .tip-box .text {
+            flex: 1;
+        }
+
+        .tip-box .text p {
+            margin-bottom: 0.2rem;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            margin: 1.8rem 0 0.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e5ddd3;
+            padding: 0.75rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 500;
+            color: #2f2a24;
+        }
+
+        .faq-a {
+            color: #565049;
+            padding-left: 0.3rem;
+            font-size: 0.95rem;
+        }
+
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: #f9f6f1;
+            padding: 0.8rem 1.2rem;
+            border-radius: 14px;
+            margin: 1.6rem 0;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e0d7cc;
+            margin: 2rem 0 1rem;
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: #7b7268;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 主视觉 hero -->
+    <div class="hero">
+        <h1>九游 · 慢慢游</h1>
+        <div class="sub">在数字与日常之间，寻一处从容</div>
+        <div class="meta">生活方式 · 信息 · 连接</div>
+    </div>
+
+    <!-- 第一段：自然引入主题，带链接 -->
+    <p>
+        无论是翻看资讯、寻找灵感，还是单纯想在一片安静的角落停留片刻，<a href="https://webs-9you.com.cn">九游</a>所呈现的内容常常带着一种恰到好处的温度。它不是那种急着推销什么东西的地方，更像是一个由真实推荐与日常笔记堆积起来的小站——有些页面讲旅行，有些聊器物，还有些只是分享一段最近读到的文字。你翻着翻着，很容易就忘了时间。
+    </p>
+
+    <!-- 用途卡片：三个信息卡片 -->
+    <div class="section-title">常见用途</div>
+    <div class="card-grid">
+        <div class="card-item">
+            <h3>阅读与摘录</h3>
+            <p>页面多为短文或清单体，适合快速阅读，也适合把喜欢的句子随手记下来。</p>
+        </div>
+        <div class="card-item">
+            <h3>发现好物</h3>
+            <p>从文具到家居小物，每件推荐都附有真实使用感受，不浮夸。</p>
+        </div>
+        <div class="card-item">
+            <h3>生活灵感</h3>
+            <p>收纳、食谱、周末去处……像是朋友聊天时提到的那些实在主意。</p>
+        </div>
+    </div>
+
+    <!-- 适合人群：标签式展示 -->
+    <div class="section-title">适合这样的人</div>
+    <div class="tag-list">
+        <span class="tag">喜欢安静浏览的人</span>
+        <span class="tag">对生活细节敏感</span>
+        <span class="tag">偶尔想读点不一样的内容</span>
+        <span class="tag">不爱被算法推着走</span>
+        <span class="tag">寻找非商业的分享</span>
+    </div>
+
+    <!-- 引用块：类似读者摘录 -->
+    <div class="quote-box">
+        <p>“其实很多好东西就在日常里，只是我们走得太快，没来得及看。九游给我的感觉，就是有人帮你把那些日常里发光的东西拣出来，轻轻放在你面前。”</p>
+        <div class="attribution">—— 一位常读用户的留言</div>
+    </div>
+
+    <!-- 提示框 / 说明 -->
+    <div class="tip-box">
+        <div class="symbol">💡</div>
+        <div class="text">
+            <p><strong>一点提示</strong></p>
+            <p>站内内容更新不算频繁，但每一篇都经过斟酌。如果你也是那种愿意慢慢看的人，或许这里正合你的节奏。</p>
+        </div>
+    </div>
+
+    <!-- 自然链接段落：第二次出现九游链接，嵌入句中 -->
+    <div class="link-paragraph">
+        <p>如果你好奇这个角落到底长什么样，直接去 <a href="https://webs-9you.com.cn">九游</a> 转转就好。没有弹窗，没有自动播放的视频，只有干干净净的页面和文字。很适合深夜或者周末午后，泡杯茶，慢慢滑动。</p>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="section-title">常见疑问 · 简短回答</div>
+    <div class="faq-mini">
+        <div class="faq-item">
+            <div class="faq-q">内容偏向什么类型？</div>
+            <div class="faq-a">生活方式、器物推荐、随笔与书摘，整体偏安静、实用。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">更新频率如何？</div>
+            <div class="faq-a">不定时，但每篇都保持一定质量，不会为了更新而更新。</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">有移动端适配吗？</div>
+            <div class="faq-a">页面本身采用响应式设计，手机阅读也很舒适。</div>
+        </div>
+    </div>
+
+    <!-- 第三段再嵌入一次链接，保持自然 -->
+    <p style="margin-top: 1.6rem;">
+        如果你在找一种不那么嘈杂的网络阅读体验，不妨把 <a href="https://webs-9you.com.cn">九游</a> 放进书签。它可能不会每天提醒你回来，但每次点开，总有点小收获。
+    </p>
+
+    <hr>
+    <div class="footer-note">
+        —— 基于真实体验 · 如实分享 ——
+    </div>
+
+</div>
+</body>
+</html>
